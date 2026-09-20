@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habbo Hotel - Rétro CMS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .habbo-bg { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); }
+        .habbo-box { background: #26334a; border: 2px solid #3b4d6c; box-shadow: 0 4px 0 #151e2d; }
+        .habbo-btn { background: #ff9800; border-bottom: 4px solid #e65100; transition: all 0.1s; }
+        .habbo-btn:active { transform: translateY(2px); border-bottom-width: 2px; }
+    </style>
+</head>
+<body class="habbo-bg text-white min-h-screen font-sans">
+
+    <!-- En-tête / Barre supérieure -->
+    <header class="bg-[#151e2d] border-b-4 border-[#ff9800] py-3 px-6 shadow-md">
+        <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-[#ff9800] p-2 rounded-lg text-black font-black text-xl shadow">
+                    <i class="fa-solid fa-hotel"></i> HABBO
+                </div>
+                <span class="text-xs bg-emerald-500 text-black px-2 py-1 rounded font-bold uppercase tracking-wider animate-pulse">
+                    <span id="online-count">482</span> Rétro Actifs
+                </span>
+            </div>
+            <nav class="flex space-x-4 text-sm font-semibold">
+                <a href="#" class="hover:text-[#ff9800] transition"><i class="fa-solid fa-house"></i> Accueil</a>
+                <a href="#community" class="hover:text-[#ff9800] transition"><i class="fa-solid fa-users"></i> Communauté</a>
+                <a href="#staff" class="hover:text-[#ff9800] transition"><i class="fa-solid fa-shield-halved"></i> Staffs</a>
+                <button onclick="toggleAdmin()" class="bg-indigo-600 px-3 py-1 rounded hover:bg-indigo-500 text-xs font-bold">Housekeeping (Admin)</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Contenu Principal -->
+    <main class="max-w-6xl mx-auto p-4 md:p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- Colonne Gauche / Actualités -->
+        <div class="md:col-span-2 space-y-6">
+            <div class="habbo-box rounded-xl p-6 relative overflow-hidden">
+                <div class="absolute right-0 top-0 opacity-10 text-9xl mr-4 mt-2">
+                    <i class="fa-solid fa-couch"></i>
+                </div>
+                <h1 class="text-2xl font-extrabold text-[#ff9800] mb-2">Bienvenue sur le Rétro de Test !</h1>
+                <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                    Ceci est une maquette CMS statique optimisée pour GitHub Pages. Tu peux la modifier, tester ton design, et préparer l'intégration de ton futur serveur émulateur (type Arcturus ou PlusEMU) !
+                </p>
+                <a href="#play" class="inline-block habbo-btn font-bold px-6 py-2 rounded text-black shadow-lg">
+                    <i class="fa-solid fa-play"></i> Entrer dans l'Hôtel
+                </a>
+            </div>
+
+            <!-- Liste des News -->
+            <div class="habbo-box rounded-xl p-6">
+                <h2 class="text-lg font-bold border-b border-slate-700 pb-2 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-newspaper text-[#ff9800]"></i> Dernières Actualités
+                </h2>
+                <div class="space-y-4">
+                    <div class="bg-[#1e2738] p-4 rounded-lg border border-slate-700">
+                        <span class="text-xs text-amber-400 font-semibold">Publié le 21 Septembre 2026 par Mod-Admin</span>
+                        <h3 class="font-bold text-base mt-1">Ouverture officielle de la bêta GitHub Pages</h3>
+                        <p class="text-sm text-slate-300 mt-1">Le site est maintenant en ligne de manière totalement gratuite et sécurisée ! N'hésite pas à tester les badges.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Colonne Droite / Widget Joueur & Panneau Admin simulé -->
+        <div class="space-y-6">
+            
+            <!-- Widget Connexion Rapide / Habbo Look -->
+            <div class="habbo-box rounded-xl p-6 text-center">
+                <div class="w-24 h-24 mx-auto bg-slate-800 rounded-full border-4 border-[#ff9800] flex items-center justify-center mb-3 shadow-inner">
+                    <i class="fa-solid fa-user-ninja text-4xl text-amber-400"></i>
+                </div>
+                <h3 class="font-bold text-lg">Visiteur Anonyme</h3>
+                <p class="text-xs text-slate-400 mb-4">Statut : Prêt à tester</p>
+                <div class="bg-[#151e2d] p-3 rounded-lg text-xs text-left space-y-2 mb-4">
+                    <div class="flex justify-between"><span>Crédits :</span> <span class="text-yellow-400 font-bold">50,000</span></div>
+                    <div class="flex justify-between"><span>Pixels :</span> <span class="text-cyan-400 font-bold">10,000</span></div>
+                    <div class="flex justify-between"><span>Diamants :</span> <span class="text-purple-400 font-bold">500</span></div>
+                </div>
+                <button class="w-full bg-emerald-600 hover:bg-emerald-500 font-bold py-2 rounded text-sm shadow">Se connecter</button>
+            </div>
+
+            <!-- Panneau Housekeeping / Admin Caché au départ -->
+            <div id="admin-panel" class="habbo-box rounded-xl p-6 hidden border-indigo-500">
+                <h3 class="font-bold text-sm text-indigo-400 mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-gears"></i> Housekeeping (Simulateur)
+                </h3>
+                <div class="space-y-3 text-xs">
+                    <div>
+                        <label class="block text-slate-400 mb-1">Modifier le titre de l'Hôtel :</label>
+                        <input type="text" id="hotel-title-input" value="Habbo Hotel - Rétro" class="w-full bg-slate-900 border border-slate-700 p-2 rounded text-white">
+                    </div>
+                    <button onclick="updateTitle()" class="w-full bg-indigo-600 hover:bg-indigo-500 py-1.5 rounded font-bold">Sauvegarder</button>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="text-center py-6 text-xs text-slate-500">
+        Habbo CMS Template for GitHub Pages — Test Environment
+    </footer>
+
+    <script>
+        // Simuler l'affichage du panneau admin Housekeeping
+        function toggleAdmin() {
+            const panel = document.getElementById('admin-panel');
+            panel.classList.toggle('hidden');
+        }
+
+        // Mettre à jour dynamiquement le titre via le mini housekeeping
+        function updateTitle() {
+            const val = document.getElementById('hotel-title-input').value;
+            alert('Paramètre appliqué (Simulation locale) : ' + val);
+        }
+
+        // Petit effet dynamique sur le compteur de joueurs
+        setInterval(() => {
+            const countElem = document.getElementById('online-count');
+            let current = parseInt(countElem.innerText);
+            let change = Math.floor(Math.random() * 5) - 2;
+            countElem.innerText = Math.max(400, current + change);
+        }, 4000);
+    </script>
+</body>
+</html>
