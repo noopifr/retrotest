@@ -1,133 +1,229 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Habbo Hotel - Rétro CMS</title>
+    <title>Nexus CMS - Dashboard & Portail</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .habbo-bg { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); }
-        .habbo-box { background: #26334a; border: 2px solid #3b4d6c; box-shadow: 0 4px 0 #151e2d; }
-        .habbo-btn { background: #ff9800; border-bottom: 4px solid #e65100; transition: all 0.1s; }
-        .habbo-btn:active { transform: translateY(2px); border-bottom-width: 2px; }
-    </style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { 50: '#eef2ff', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca' }
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body class="habbo-bg text-white min-h-screen font-sans">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
 
-    <!-- En-tête / Barre supérieure -->
-    <header class="bg-[#151e2d] border-b-4 border-[#ff9800] py-3 px-6 shadow-md">
-        <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center">
+    <!-- NAVIGATION -->
+    <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <div class="bg-[#ff9800] p-2 rounded-lg text-black font-black text-xl shadow">
-                    <i class="fa-solid fa-hotel"></i> HABBO
+                <div class="bg-indigo-600 p-2 rounded-xl text-white font-black shadow-lg shadow-indigo-500/30">
+                    <i class="fa-solid fa-cubes"></i>
                 </div>
-                <span class="text-xs bg-emerald-500 text-black px-2 py-1 rounded font-bold uppercase tracking-wider animate-pulse">
-                    <span id="online-count">482</span> Rétro Actifs
+                <span class="font-extrabold text-lg tracking-wide bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">NEXUS CMS</span>
+            </div>
+            <nav class="hidden md:flex space-x-6 text-sm font-medium">
+                <button onclick="switchTab('home')" id="nav-home" class="text-indigo-400 transition hover:text-indigo-300">Accueil</button>
+                <button onclick="switchTab('community')" id="nav-community" class="text-slate-400 transition hover:text-indigo-300">Communauté</button>
+                <button onclick="switchTab('admin')" id="nav-admin" class="text-slate-400 transition hover:text-indigo-300 flex items-center gap-1.5"><i class="fa-solid fa-lock text-xs"></i> Administration</button>
+            </nav>
+            <div class="flex items-center space-x-3">
+                <span class="text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-3 py-1.5 rounded-full font-semibold flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> <span id="counter">342</span> en ligne
                 </span>
             </div>
-            <nav class="flex space-x-4 text-sm font-semibold">
-                <a href="#" class="hover:text-[#ff9800] transition"><i class="fa-solid fa-house"></i> Accueil</a>
-                <a href="#community" class="hover:text-[#ff9800] transition"><i class="fa-solid fa-users"></i> Communauté</a>
-                <a href="#staff" class="hover:text-[#ff9800] transition"><i class="fa-solid fa-shield-halved"></i> Staffs</a>
-                <button onclick="toggleAdmin()" class="bg-indigo-600 px-3 py-1 rounded hover:bg-indigo-500 text-xs font-bold">Housekeeping (Admin)</button>
-            </nav>
         </div>
     </header>
 
-    <!-- Contenu Principal -->
-    <main class="max-w-6xl mx-auto p-4 md:p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- CONTENU PRINCIPAL -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full">
 
-        <!-- Colonne Gauche / Actualités -->
-        <div class="md:col-span-2 space-y-6">
-            <div class="habbo-box rounded-xl p-6 relative overflow-hidden">
-                <div class="absolute right-0 top-0 opacity-10 text-9xl mr-4 mt-2">
-                    <i class="fa-solid fa-couch"></i>
+        <!-- ONGLET : ACCUEIL & ARTICLES -->
+        <section id="tab-home" class="space-y-6">
+            <div class="bg-gradient-to-r from-indigo-900/40 via-slate-900 to-slate-900 border border-indigo-500/20 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
+                <div class="max-w-2xl relative z-10">
+                    <span class="bg-indigo-500/20 text-indigo-300 text-xs px-3 py-1 rounded-full font-bold uppercase tracking-wider">Version Statique GitHub</span>
+                    <h1 class="text-3xl md:text-4xl font-black mt-3 mb-2 tracking-tight">Bienvenue sur votre espace CMS</h1>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6">Ce CMS gère dynamiquement vos publications grâce au stockage local de votre navigateur. Testez l'onglet Administration pour publier instantanément vos actualités !</p>
+                    <button onclick="switchTab('admin')" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-6 py-2.5 rounded-xl text-sm transition shadow-lg shadow-indigo-600/30">
+                        <i class="fa-solid fa-pen-to-square mr-2"></i> Rédiger un article
+                    </button>
                 </div>
-                <h1 class="text-2xl font-extrabold text-[#ff9800] mb-2">Bienvenue sur le Rétro de Test !</h1>
-                <p class="text-slate-300 text-sm leading-relaxed mb-4">
-                    Ceci est une maquette CMS statique optimisée pour GitHub Pages. Tu peux la modifier, tester ton design, et préparer l'intégration de ton futur serveur émulateur (type Arcturus ou PlusEMU) !
-                </p>
-                <a href="#play" class="inline-block habbo-btn font-bold px-6 py-2 rounded text-black shadow-lg">
-                    <i class="fa-solid fa-play"></i> Entrer dans l'Hôtel
-                </a>
             </div>
 
-            <!-- Liste des News -->
-            <div class="habbo-box rounded-xl p-6">
-                <h2 class="text-lg font-bold border-b border-slate-700 pb-2 mb-4 flex items-center gap-2">
-                    <i class="fa-solid fa-newspaper text-[#ff9800]"></i> Dernières Actualités
-                </h2>
-                <div class="space-y-4">
-                    <div class="bg-[#1e2738] p-4 rounded-lg border border-slate-700">
-                        <span class="text-xs text-amber-400 font-semibold">Publié le 21 Septembre 2026 par Mod-Admin</span>
-                        <h3 class="font-bold text-base mt-1">Ouverture officielle de la bêta GitHub Pages</h3>
-                        <p class="text-sm text-slate-300 mt-1">Le site est maintenant en ligne de manière totalement gratuite et sécurisée ! N'hésite pas à tester les badges.</p>
+            <!-- Grille des Articles Dynamiques -->
+            <div>
+                <h2 class="text-xl font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-newspaper text-indigo-400"></i> Actualités Récentes</h2>
+                <div id="articles-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Les articles injectés par JS apparaîtront ici -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ONGLET : COMMUNAUTÉ -->
+        <section id="tab-community" class="hidden space-y-6">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+                <h2 class="text-xl font-bold mb-4 flex items-center gap-2"><i class="fa-solid fa-users text-indigo-400"></i> Membres Actifs</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="members-list">
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-center">
+                        <div class="w-12 h-12 bg-indigo-600/20 text-indigo-400 rounded-full flex items-center justify-center mx-auto mb-2 font-bold text-lg">A</div>
+                        <h4 class="font-bold text-sm">AdminUser</h4>
+                        <span class="text-xs text-indigo-400">Fondateur</span>
+                    </div>
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-center">
+                        <div class="w-12 h-12 bg-emerald-600/20 text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-2 font-bold text-lg">M</div>
+                        <h4 class="font-bold text-sm">ModoTest</h4>
+                        <span class="text-xs text-emerald-400">Modérateur</span>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Colonne Droite / Widget Joueur & Panneau Admin simulé -->
-        <div class="space-y-6">
-            
-            <!-- Widget Connexion Rapide / Habbo Look -->
-            <div class="habbo-box rounded-xl p-6 text-center">
-                <div class="w-24 h-24 mx-auto bg-slate-800 rounded-full border-4 border-[#ff9800] flex items-center justify-center mb-3 shadow-inner">
-                    <i class="fa-solid fa-user-ninja text-4xl text-amber-400"></i>
+        <!-- ONGLET : ADMINISTRATION (HOUSEKEEPING) -->
+        <section id="tab-admin" class="hidden space-y-6 max-w-2xl mx-auto">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+                <div class="border-b border-slate-800 pb-4 mb-6 flex justify-between items-center">
+                    <h2 class="text-xl font-bold flex items-center gap-2"><i class="fa-solid fa-gauge-high text-indigo-400"></i> Housekeeping - Gestion CMS</h2>
+                    <span class="text-xs bg-red-500/10 text-red-400 border border-red-500/20 px-2.5 py-1 rounded font-semibold">Mode Administrateur</span>
                 </div>
-                <h3 class="font-bold text-lg">Visiteur Anonyme</h3>
-                <p class="text-xs text-slate-400 mb-4">Statut : Prêt à tester</p>
-                <div class="bg-[#151e2d] p-3 rounded-lg text-xs text-left space-y-2 mb-4">
-                    <div class="flex justify-between"><span>Crédits :</span> <span class="text-yellow-400 font-bold">50,000</span></div>
-                    <div class="flex justify-between"><span>Pixels :</span> <span class="text-cyan-400 font-bold">10,000</span></div>
-                    <div class="flex justify-between"><span>Diamants :</span> <span class="text-purple-400 font-bold">500</span></div>
-                </div>
-                <button class="w-full bg-emerald-600 hover:bg-emerald-500 font-bold py-2 rounded text-sm shadow">Se connecter</button>
-            </div>
 
-            <!-- Panneau Housekeeping / Admin Caché au départ -->
-            <div id="admin-panel" class="habbo-box rounded-xl p-6 hidden border-indigo-500">
-                <h3 class="font-bold text-sm text-indigo-400 mb-3 flex items-center gap-2">
-                    <i class="fa-solid fa-gears"></i> Housekeeping (Simulateur)
-                </h3>
-                <div class="space-y-3 text-xs">
+                <form id="article-form" onsubmit="handle createArticle(event)" class="space-y-4">
                     <div>
-                        <label class="block text-slate-400 mb-1">Modifier le titre de l'Hôtel :</label>
-                        <input type="text" id="hotel-title-input" value="Habbo Hotel - Rétro" class="w-full bg-slate-900 border border-slate-700 p-2 rounded text-white">
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Titre de l'article</label>
+                        <input type="text" id="art-title" required placeholder="Ex: Grande mise à jour du serveur !" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500 transition">
                     </div>
-                    <button onclick="updateTitle()" class="w-full bg-indigo-600 hover:bg-indigo-500 py-1.5 rounded font-bold">Sauvegarder</button>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Auteur</label>
+                        <input type="text" id="art-author" required placeholder="Votre pseudo" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-indigo-500 transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Contenu de l'actualité</label>
+                        <textarea id="art-content" rows="4" required placeholder="Rédigez votre message ici..." class="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-sm focus:outline-none focus:border-indigo-500 transition"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 rounded-xl text-sm transition shadow-lg shadow-indigo-600/30">
+                        <i class="fa-solid fa-cloud-arrow-up mr-2"></i> Publier l'article sur le site
+                    </button>
+                </form>
+
+                <div class="mt-8 pt-6 border-t border-slate-800">
+                    <h3 class="font-bold text-sm mb-3">Articles enregistrés en base locale :</h3>
+                    <div id="admin-articles-list" class="space-y-2 max-h-48 overflow-y-auto pr-2">
+                        <!-- Liste gérée par JS -->
+                    </div>
                 </div>
             </div>
-
-        </div>
+        </section>
 
     </main>
 
-    <footer class="text-center py-6 text-xs text-slate-500">
-        Habbo CMS Template for GitHub Pages — Test Environment
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 border-t border-slate-800 py-6 text-center text-xs text-slate-500">
+        Nexus CMS Statique propulsé pour GitHub Pages &bull; Tous droits réservés
     </footer>
 
+    <!-- SCRIPT LOGIQUE CMS -->
     <script>
-        // Simuler l'affichage du panneau admin Housekeeping
-        function toggleAdmin() {
-            const panel = document.getElementById('admin-panel');
-            panel.classList.toggle('hidden');
+        // Articles par défaut si le LocalStorage est vide
+        let articles = JSON.parse(localStorage.getItem('nexus_articles')) || [
+            { id: 1, title: "Lancement Officiel de Nexus", author: "Système", date: "21 Sept 2026", content: "Bienvenue sur le nouveau portail CMS interactif. Vous pouvez créer de nouveaux articles depuis l'onglet d'administration !" }
+        ];
+
+        function saveAndRender() {
+            localStorage.setItem('nexus_articles', JSON.stringify(articles));
+            renderArticles();
         }
 
-        // Mettre à jour dynamiquement le titre via le mini housekeeping
-        function updateTitle() {
-            const val = document.getElementById('hotel-title-input').value;
-            alert('Paramètre appliqué (Simulation locale) : ' + val);
+        function renderArticles() {
+            const container = document.getElementById('articles-container');
+            const adminList = document.getElementById('admin-articles-list');
+            
+            container.innerHTML = '';
+            adminList.innerHTML = '';
+
+            if (articles.length === 0) {
+                container.innerHTML = '<p class="text-slate-500 text-sm col-span-full">Aucun article publié pour le moment.</p>';
+                adminList.innerHTML = '<p class="text-slate-500 text-xs">Aucun article en base.</p>';
+                return;
+            }
+
+            articles.forEach((art) => {
+                // Affichage Accueil
+                container.innerHTML += `
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between hover:border-slate-700 transition">
+                        <div>
+                            <div class="flex justify-between items-center text-xs text-slate-500 mb-3">
+                                <span class="bg-indigo-500/10 text-indigo-400 px-2.5 py-1 rounded-md font-semibold">${art.author}</span>
+                                <span>${art.date}</span>
+                            </div>
+                            <h3 class="font-bold text-lg mb-2 text-slate-100">${art.title}</h3>
+                            <p class="text-slate-400 text-sm leading-relaxed">${art.content}</p>
+                        </div>
+                    </div>
+                `;
+
+                // Affichage Panneau Admin
+                adminList.innerHTML += `
+                    <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 flex justify-between items-center text-xs">
+                        <div>
+                            <span class="font-bold text-slate-200">${art.title}</span>
+                            <span class="text-slate-500 ml-2">(${art.author})</span>
+                        </div>
+                        <button onclick="deleteArticle(${art.id})" class="bg-red-500/10 text-red-400 hover:bg-red-500/20 px-2.5 py-1 rounded font-semibold transition">Supprimer</button>
+                    </div>
+                `;
+            });
         }
 
-        // Petit effet dynamique sur le compteur de joueurs
+        function createArticle(e) {
+            e.preventDefault();
+            const title = document.getElementById('art-title').value;
+            const author = document.getElementById('art-author').value;
+            const content = document.getElementById('art-content').value;
+            const date = new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
+
+            const newArt = { id: Date.now(), title, author, date, content };
+            articles.unshift(newArt);
+            
+            saveAndRender();
+            document.getElementById('article-form').reset();
+            switchTab('home');
+        }
+
+        function deleteArticle(id) {
+            articles = articles.filter(a => a.id !== id);
+            saveAndRender();
+        }
+
+        function switchTab(tabId) {
+            ['home', 'community', 'admin'].forEach(t => {
+                document.getElementById('tab-' + t).classList.add('hidden');
+                document.getElementById('nav-' + t)?.classList.remove('text-indigo-400');
+                document.getElementById('nav-' + t)?.classList.add('text-slate-400');
+            });
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            if(document.getElementById('nav-' + tabId)) {
+                document.getElementById('nav-' + tabId).classList.remove('text-slate-400');
+                document.getElementById('nav-' + tabId).classList.add('text-indigo-400');
+            }
+        }
+
+        // Animation compteur en ligne
         setInterval(() => {
-            const countElem = document.getElementById('online-count');
-            let current = parseInt(countElem.innerText);
-            let change = Math.floor(Math.random() * 5) - 2;
-            countElem.innerText = Math.max(400, current + change);
-        }, 4000);
+            const el = document.getElementById('counter');
+            let val = parseInt(el.innerText) + (Math.floor(Math.random() * 5) - 2);
+            el.innerText = Math.max(300, val);
+        }, 5000);
+
+        // Lancement initial
+        renderArticles();
     </script>
 </body>
 </html>
